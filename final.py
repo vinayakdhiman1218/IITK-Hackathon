@@ -56,7 +56,7 @@ for _, row in tqdm(
     character = row["char"]
     claim = row["content"]
 
-    # ---- LOAD & CACHE BOOK ONCE ----
+    # LOAD & CACHE BOOK ONCE
     if book_name not in book_cache:
         novel_text = load_book(book_name)
         chunks = chunk_text(novel_text)
@@ -77,16 +77,16 @@ for _, row in tqdm(
 
     chunks, chunk_embeddings = book_cache[book_name]
 
-    # ---- CLAIM EMBEDDING (CHARACTER AWARE) ----
+    # CLAIM EMBEDDING (CHARACTER AWARE)
     claim_text = f"{character}. {claim}"
     claim_emb = model.encode([claim_text])[0]
 
-    # ---- FAST SIMILARITY ----
+    # FAST SIMILARITY 
     scores = cosine_scores(chunk_embeddings, claim_emb)
     best_idx = scores.argmax()
     final_score = scores[best_idx]
 
-    # ---- DECISION (SAFE & CONSERVATIVE) ----
+    # DECISION (SAFE & CONSERVATIVE) 
     prediction = 1 if final_score > 0.45 else 0
 
     results.append({
