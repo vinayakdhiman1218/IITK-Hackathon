@@ -73,7 +73,6 @@ We adopt an evidence-grounded retrieval pipeline:
 
 ---
 
-<details>
   <summary style="list-style: none; cursor:pointer; display: inline;">
      <b>
         <h2 style="display: inline;">
@@ -91,7 +90,6 @@ We adopt an evidence-grounded retrieval pipeline:
 &emsp;&emsp;&emsp;&emsp;├── The Count of Monte Cristo.txt  <br>
 &emsp;&emsp;&emsp;&emsp;└── results.csv  <br>
 
-</details>
 ---
 
 ## ▶️ Quick Start
