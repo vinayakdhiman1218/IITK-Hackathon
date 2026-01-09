@@ -136,5 +136,10 @@ Inconsistent claims lack sufficient semantic evidence or contradict the narrativ
 ```
 <br>
 
-| Team-mates | Contributions |
-| :--- | :--- |
+**| Team-mates | Contributions |**
+| Name | Role |
+|-----|------|
+| Vinayak Dhiman | Lead Developer & System Integration |
+| Shaurya Swaraj | Supporting Developer |
+| Diksha Jangra | Documentation & Presentation |
+| Pritham Prajwin V | Analysis & Team Coordination |
