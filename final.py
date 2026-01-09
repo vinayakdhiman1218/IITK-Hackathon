@@ -7,11 +7,11 @@ import torch
 
 # AUTO DEVICE DETECTION
 if torch.cuda.is_available():
-    device = "cuda"          
+    device = "cuda"
 elif torch.backends.mps.is_available():
-    device = "mps"           
+    device = "mps"
 else:
-    device = "cpu"           
+    device = "cpu"
 
 print("Using device:", device)
 
@@ -32,17 +32,18 @@ def load_book(book_name):
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
         return f.read()
 
-# CHUNK NOVEL
+# CHUNK TEXT
 def chunk_text(text, size=800):
     return [text[i:i+size] for i in range(0, len(text), size)]
 
-# CACHE
+# CACHE BOOK PROCESSING
 book_cache = {}
 
-def cosine_scores(matrix, vector):
+def cosine_similarity(matrix, vector):
     return np.dot(matrix, vector) / (
         np.linalg.norm(matrix, axis=1) * np.linalg.norm(vector)
     )
+
 # MAIN LOOP
 results = []
 
@@ -51,47 +52,54 @@ for _, row in tqdm(
     total=len(test_df),
     desc="Processing stories"
 ):
-    sample_id = row["id"]
+    story_id = row["id"]
     book_name = row["book_name"]
     character = row["char"]
     claim = row["content"]
 
-    # LOAD & CACHE BOOK ONCE
+    # ---- LOAD & CACHE BOOK ONCE ----
     if book_name not in book_cache:
         novel_text = load_book(book_name)
         chunks = chunk_text(novel_text)
 
-        # Pathway ingestion
+        # Pathway ingestion (Track A requirement)
         pw.debug.table_from_pandas(
             pd.DataFrame({"text": chunks})
         )
 
-        # Batch embeddings
-        chunk_embeddings = model.encode(
+        embeddings = model.encode(
             chunks,
             batch_size=32,
             show_progress_bar=False
         )
 
-        book_cache[book_name] = (chunks, chunk_embeddings)
+        book_cache[book_name] = (chunks, embeddings)
 
-    chunks, chunk_embeddings = book_cache[book_name]
+    chunks, embeddings = book_cache[book_name]
 
-    # CLAIM EMBEDDING (CHARACTER AWARE)
+    # ---- CLAIM EMBEDDING ----
     claim_text = f"{character}. {claim}"
-    claim_emb = model.encode([claim_text])[0]
+    claim_embedding = model.encode([claim_text])[0]
 
-    # FAST SIMILARITY 
-    scores = cosine_scores(chunk_embeddings, claim_emb)
+    # ---- SIMILARITY SEARCH ----
+    scores = cosine_similarity(embeddings, claim_embedding)
     best_idx = scores.argmax()
-    final_score = scores[best_idx]
+    best_score = scores[best_idx]
+    best_chunk = chunks[best_idx]
 
-    # DECISION (SAFE & CONSERVATIVE) 
-    prediction = 1 if final_score > 0.45 else 0
+    # ---- DECISION RULE ----
+    prediction = 1 if best_score > 0.45 else 0
+
+    # ---- RATIONALE (1–2 LINES) ----
+    if prediction == 1:
+        rationale = best_chunk[:180].replace("\n", " ")
+    else:
+        rationale = "No strong textual evidence in the novel supports this claim."
 
     results.append({
-        "id": sample_id,
-        "prediction": prediction
+        "story_id": story_id,
+        "prediction": prediction,
+        "rationale": rationale
     })
 
 # SAVE RESULTS
