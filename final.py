@@ -92,9 +92,40 @@ for _, row in tqdm(
 
     # ---- RATIONALE ----
     if prediction == 1:
-        rationale = best_chunk[:180].replace("\n", " ")
+        clean_chunk = best_chunk.replace("\n", " ").strip()
+
+        # Try to detect chapter/section heading
+        chapter_hint = ""
+        lowered = clean_chunk.lower()
+        if "chapter" in lowered:
+            chap_idx = lowered.find("chapter")
+            chapter_hint = clean_chunk[chap_idx: chap_idx + 60].split(".")[0] + "."
+
+        # Extract a complete sentence for evidence
+        first_period = clean_chunk.find(".")
+        if first_period != -1 and first_period < 300:
+            excerpt = clean_chunk[: first_period + 1]
+        else:
+            excerpt = clean_chunk[:180]
+
+        if chapter_hint:
+            rationale = (
+                f"This claim is marked consistent because the following line is taken "
+                f"from the main story text ({chapter_hint}) and aligns with the given "
+                f"backstory: \"{excerpt}\""
+            )
+        else:
+            rationale = (
+                "This claim is marked consistent because the following line is taken "
+                "from the main story text and aligns with the given backstory: "
+                f"\"{excerpt}\""
+            )
     else:
-        rationale = "No strong textual evidence in the novel supports this claim."
+        rationale = (
+            "This claim is marked inconsistent because no line from the main story "
+            "text (across relevant chapters/sections) provides clear support for "
+            "the given backstory."
+        )
 
     results.append({
         "story_id": story_id,
@@ -103,5 +134,9 @@ for _, row in tqdm(
     })
 
 # SAVE RESULTS
-pd.DataFrame(results).to_csv("results.csv", index=False)
+results_df = pd.DataFrame(
+    results,
+    columns=["story_id", "prediction", "rationale"]
+)
+results_df.to_csv("results.csv", index=False)
 print("✅ results.csv generated successfully.")
