@@ -1,0 +1,15 @@
+# Core framework (Track A requirement)
+pathway
+
+# Semantic embeddings
+sentence-transformers
+
+# Deep learning backend (CUDA / MPS / CPU support)
+torch
+
+# Data handling & numerical computation
+pandas
+numpy
+
+# Progress visualization
+tqdm
