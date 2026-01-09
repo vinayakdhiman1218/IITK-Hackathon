@@ -72,24 +72,23 @@ We adopt an evidence-grounded retrieval pipeline:
 - tqdm  
 
 ---
+<details>
+  <summary style="list-style: none; cursor: pointer;">
+    <b>📂 Repository Structure (Click to view)</b>
+  </summary>
 
-  <summary style="list-style: none; cursor:pointer; display: inline;">
-     <b>
-        <h2 style="display: inline;">
-           📂 Repository Structure(Click to view)
-        </h2>
-     </b>
-  </summary> 
-&emsp;&nbsp;•<br>
-&emsp;<b>└── README.md</b><br>
-&emsp;<b>└── Code </b><br>
-&emsp;&emsp;&emsp;&emsp;├── final.py<br>
-&emsp;&emsp;&emsp;&emsp;├── train.csv<br>
-&emsp;&emsp;&emsp;&emsp;├── test.csv<br>
-&emsp;&emsp;&emsp;&emsp;├── In search of the castaways.txt<br>
-&emsp;&emsp;&emsp;&emsp;├── The Count of Monte Cristo.txt  <br>
-&emsp;&emsp;&emsp;&emsp;└── results.csv  <br>
-
+  <pre>
+IITK Hackathon/
+├── final.py
+├── README.md
+├── requirements.txt
+├── results.csv
+├── test.csv
+├── train.csv
+├── In search of the castaways.txt
+└── The Count of Monte Cristo.txt
+  </pre>
+</details>
 ---
 
 ## ▶️ Quick Start
