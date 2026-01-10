@@ -125,7 +125,7 @@ Inconsistent claims lack sufficient semantic evidence or contradict the narrativ
    | ' /  | | | | \___ \| |_| |               **           **
    | . \  | |_| |  ___) |  _  |                 **       **
    |_|\_\ |____/  |____/|_| |_|                   **   **
-◣                                 ◢                 *
+◣                                 ◢                  *
 
 ```
 <br>
