@@ -76,8 +76,10 @@ We adopt an evidence-grounded retrieval pipeline:
 
   <pre>
 IITK Hackathon/
-├── final.py
+├── data_forever.py
 ├── README.md
+├── report.pdf
+├── accuracy.py
 ├── requirements.txt
 ├── results.csv
 ├── test.csv
@@ -111,6 +113,30 @@ Consistent claims exhibit strong semantic alignment with at least one specific p
 Inconsistent claims lack sufficient semantic evidence or contradict the narrative.
 
 ---
+
+## 🎯 Accuracy & Performance
+
+**📊 Model Performance**
+
+Our team has consistently achieved high performance across the validation set. Below are the metrics from our latest run:
+
+| Metric | Value |
+| :--- | :--- |
+| **Accuracy** | 90.91% |
+| **Precision** | 100.00% |
+| **Recall** | 90.91% |
+| **F1 Score** | 95.24% |
+
+*Note: Results based on a 80/20 train-test split as configured in our preprocessing pipeline.*<br>
+**Accuracy:~**<br><br>
+&emsp;&emsp;&emsp;![Accuracy](https://img.shields.io/badge/Accuracy-90.91%25-brightgreen)
+&ensp;![F1 Score](https://img.shields.io/badge/F1--Score-95.24%25-blue)
+
+The model currently operates with a frequented accuracy of **90.91%**. Through iterative testing by the team, this has remained our stable baseline for the current dataset version.
+
+
+---
+
 
 ## 🏁 Submission
 
