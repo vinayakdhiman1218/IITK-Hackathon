@@ -151,7 +151,7 @@ The model currently operates with a frequented accuracy of **90.91%**. Through i
    | ' /  | | | | \___ \| |_| |               **           **
    | . \  | |_| |  ___) |  _  |                 **       **
    |_|\_\ |____/  |____/|_| |_|                   **   **
-◣                                 ◢                  *
+◣                                 ◢                 *
 
 ```
 <br>
